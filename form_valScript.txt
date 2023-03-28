@@ -1,0 +1,31 @@
+function onFormSubmit() {
+  var formResponse = e.response;
+  var itemResponses = formResponse.getItemResponses();
+
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+
+  for (var i = 0; i < itemResponses.length; i++) {
+    var question = itemResponses[i].getItem().getTitle();
+    var response = itemResponses[i].getResponse();
+
+    for (var j = 0; j < data.length; j++) {
+      var id = data[j][0];
+      var full_name = data[j][1];
+
+      if (question == "Your ID" && respose == id) {
+        var row = sheet.getRange(j + 1, 1, 1, itemResponses.length);
+        row.setValues([itemResponses.map(function(item) {
+          return item.getResponse();
+        })]);
+      }
+
+      if (question == "Your Name" && response == full_name) {
+        var row = sheet.getRange(j + 1, 1, 1, itemResponses.length);
+        row.setValues([itemResponses.map(function(item) {
+          return item.getResponse();
+        })])
+      }
+    }
+  }
+}
